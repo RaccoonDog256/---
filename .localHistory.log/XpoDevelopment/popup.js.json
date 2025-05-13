@@ -1,0 +1,22 @@
+{
+    "sourceFile": "popup.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1747117934889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747117940034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   document.getElementById(\"imageUploader\").click();\n });\n \n document.getElementById(\"imageUploader\").addEventListener(\"change\", async (event) => {\n-  \n+  console.log(\"Image upload triggered\");\n   const file = event.target.files[0];\n   if (file) {\n     const reader = new FileReader();\n     reader.onload = (e) => {\n"
+                }
+            ],
+            "date": 1747117934889,
+            "name": "Commit-0",
+            "content": "\ndocument.getElementById(\"uploadImage\").addEventListener(\"click\", () => {\n  document.getElementById(\"imageUploader\").click();\n});\n\ndocument.getElementById(\"imageUploader\").addEventListener(\"change\", async (event) => {\n  \n  const file = event.target.files[0];\n  if (file) {\n    const reader = new FileReader();\n    reader.onload = (e) => {\n      const imageUrl = e.target.result;\n      chrome.storage.sync.get([\"images\"], ({ images }) => {\n        const updatedImages = images ? [...images, imageUrl] : [imageUrl];\n        chrome.storage.sync.set({ images: updatedImages });\n        updateImageList(updatedImages);\n      });\n    };\n    reader.readAsDataURL(file);\n  }\n});\n\nfunction updateImageList(images) {\n  const imageList = document.getElementById(\"imageList\");\n  imageList.innerHTML = \"\";\n  images.forEach((src) => {\n    const img = document.createElement(\"img\");\n    img.src = src;\n    img.style.width = \"100px\";\n    imageList.appendChild(img);\n  });\n}\n"
+        }
+    ]
+}
