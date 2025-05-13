@@ -1,3 +1,19 @@
+document.addEventListener("DOMContentLoaded", () => {
+  chrome.storage.local.get(["images"], ({ images }) => {
+    if (images && images.length) {
+      console.log("Loaded images from local storage:", images);
+      updateImageList(images);
+    } else {
+      // 初期画像がない場合は追加
+      const defaultImages = [chrome.runtime.getURL("rakko.png")];
+      chrome.storage.local.set({ images: defaultImages }, () => {
+        console.log("Default images set:", defaultImages);
+        updateImageList(defaultImages);
+      });
+    }
+  });
+});
+
 document.getElementById("imageUploader").addEventListener("change", async (event) => {
   console.log("Image upload triggered");
   const file = event.target.files[0];
