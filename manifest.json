@@ -3,22 +3,37 @@
   "name": "Random Image Popup",
   "version": "1.0",
   "description": "A Chrome extension that randomly displays images popping up from the bottom of the screen.",
-  "permissions": ["storage"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["rakko.png"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "rakko.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
-  ]
+  ],
+  "icons": {
+    "128": "icon128.png"
+  }
 }
