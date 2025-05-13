@@ -1,8 +1,3 @@
-
-document.getElementById("uploadImage").addEventListener("click", () => {
-  document.getElementById("imageUploader").click();
-});
-
 document.getElementById("imageUploader").addEventListener("change", async (event) => {
   console.log("Image upload triggered");
   const file = event.target.files[0];
@@ -12,14 +7,27 @@ document.getElementById("imageUploader").addEventListener("change", async (event
       const imageUrl = e.target.result;
       chrome.storage.sync.get(["images"], ({ images }) => {
         const updatedImages = images ? [...images, imageUrl] : [imageUrl];
-        chrome.storage.sync.set({ images: updatedImages });
-        updateImageList(updatedImages);
+        chrome.storage.sync.set({ images: updatedImages }, () => {
+          updateImageList(updatedImages);
+          triggerImagePopup(imageUrl); // アップロード後すぐにポップアップ
+        });
       });
     };
     reader.readAsDataURL(file);
   }
 });
 
+// メッセージを送信してポップアップ
+function triggerImagePopup(imageUrl) {
+  console.log("Triggering immediate popup for:", imageUrl);
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs.length > 0) {
+      chrome.tabs.sendMessage(tabs[0].id, { action: "popupImage", imageUrl });
+    }
+  });
+}
+
+// 画像リストを更新
 function updateImageList(images) {
   const imageList = document.getElementById("imageList");
   imageList.innerHTML = "";
