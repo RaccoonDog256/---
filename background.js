@@ -1,4 +1,6 @@
-
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ images: [] });
+  const defaultImages = [
+    chrome.runtime.getURL("rakko.png") // 拡張機能内のデフォルト画像
+  ];
+  chrome.storage.sync.set({ images: defaultImages });
 });
