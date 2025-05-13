@@ -5,9 +5,10 @@ document.getElementById("imageUploader").addEventListener("change", async (event
     const reader = new FileReader();
     reader.onload = (e) => {
       const imageUrl = e.target.result;
-      chrome.storage.sync.get(["images"], ({ images }) => {
+      chrome.storage.local.get(["images"], ({ images }) => {
         const updatedImages = images ? [...images, imageUrl] : [imageUrl];
-        chrome.storage.sync.set({ images: updatedImages }, () => {
+        chrome.storage.local.set({ images: updatedImages }, () => {
+          console.log("Images updated in local storage:", updatedImages);
           updateImageList(updatedImages);
           triggerImagePopup(imageUrl); // アップロード後すぐにポップアップ
         });
@@ -34,7 +35,17 @@ function updateImageList(images) {
   images.forEach((src) => {
     const img = document.createElement("img");
     img.src = src;
-    img.style.width = "100px";
+    img.className = "image-card";
     imageList.appendChild(img);
   });
 }
+
+// 初回ロード時にローカルから画像を読み込む
+document.addEventListener("DOMContentLoaded", () => {
+  chrome.storage.local.get(["images"], ({ images }) => {
+    if (images && images.length) {
+      console.log("Loaded images from local storage:", images);
+      updateImageList(images);
+    }
+  });
+});
