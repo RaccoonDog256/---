@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1747117934889,
@@ -12,6 +12,14 @@
                 {
                     "date": 1747117940034,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   document.getElementById(\"imageUploader\").click();\n });\n \n document.getElementById(\"imageUploader\").addEventListener(\"change\", async (event) => {\n-  \n+  console.log(\"Image upload triggered\");\n   const file = event.target.files[0];\n   if (file) {\n     const reader = new FileReader();\n     reader.onload = (e) => {\n"
+                },
+                {
+                    "date": 1747118069762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,17 @@\n-\n document.getElementById(\"uploadImage\").addEventListener(\"click\", () => {\n   document.getElementById(\"imageUploader\").click();\n });\n \n document.getElementById(\"imageUploader\").addEventListener(\"change\", async (event) => {\n-  console.log(\"Image upload triggered\");\n   const file = event.target.files[0];\n   if (file) {\n     const reader = new FileReader();\n     reader.onload = (e) => {\n       const imageUrl = e.target.result;\n-      chrome.storage.sync.get([\"images\"], ({ images }) => {\n+      chrome.storage.local.get([\"images\"], ({ images }) => {\n         const updatedImages = images ? [...images, imageUrl] : [imageUrl];\n-        chrome.storage.sync.set({ images: updatedImages });\n+        chrome.storage.local.set({ images: updatedImages });\n         updateImageList(updatedImages);\n       });\n     };\n     reader.readAsDataURL(file);\n"
+                },
+                {
+                    "date": 1747118475277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n document.getElementById(\"uploadImage\").addEventListener(\"click\", () => {\n+  console.log(\"Upload Image button clicked\");\n   document.getElementById(\"imageUploader\").click();\n });\n \n document.getElementById(\"imageUploader\").addEventListener(\"change\", async (event) => {\n"
                 }
             ],
             "date": 1747117934889,
