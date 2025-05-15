@@ -1,6 +1,5 @@
 // 初回ロード時の画像表示（ローカルストレージ）
 chrome.storage.local.get(["images"], ({ images }) => {
-  console.log("Content script loaded with images:", images);
   if (images && images.length) {
     startImagePopup(images);
   }
@@ -33,7 +32,6 @@ function startImagePopup(images) {
   }
 
   storedImages = images;
-  console.log("Stored images for popup:", storedImages);
 
   // 3秒ごとにポップアップ
   popupInterval = setInterval(() => {
@@ -43,7 +41,6 @@ function startImagePopup(images) {
 
 // 画像をポップアップ表示する関数
 function displayImages(images) {
-  console.log("Displaying images:", images);
   if (images && images.length) {
     images.forEach((src) => {
       displayImagePopup(src);
@@ -67,7 +64,6 @@ function displayImagePopup(imageUrl) {
   // ランダムに反転（50%の確率）
   if (Math.random() > 0.5) {
     img.style.transform = "scaleX(-1)";
-    console.log("Image flipped horizontally:", imageUrl);
   }
 
   document.body.appendChild(img);
