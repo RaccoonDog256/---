@@ -64,6 +64,12 @@ function displayImagePopup(imageUrl) {
   img.style.width = "auto";
   img.style.transition = "bottom 2s ease-out";
 
+  // ランダムに反転（50%の確率）
+  if (Math.random() > 0.5) {
+    img.style.transform = "scaleX(-1)";
+    console.log("Image flipped horizontally:", imageUrl);
+  }
+
   document.body.appendChild(img);
 
   setTimeout(() => {
